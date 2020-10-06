@@ -13,7 +13,7 @@
     ],
     "homepage": "https://phpscraper.de",
     "type": "library",
-    "license": "GPL-3",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Peter Thaleikis",

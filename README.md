@@ -6,6 +6,7 @@ An helper to compare similarity of keywords or list of keyword.
 
 You will still need to a make a final call which helper(s) to use and how to configure them.
 
+This package is intended to be used with [PHPScraper](https://github.com/spekulatius/phpscraper).
 
 # Sponsors
 
