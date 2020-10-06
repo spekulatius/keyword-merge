@@ -1,0 +1,56 @@
+{
+    "name": "spekulatius/keyword-merge",
+    "description": "A helper to compare and merge similar keywords using PHP.",
+    "keywords": [
+        "keyword similarity",
+        "keyword merging",
+        "keyword cleanup",
+        "keyword filtering",
+        "PHP scraper",
+        "PHP scraping",
+        "web scraping",
+        "PHP library"
+    ],
+    "homepage": "https://phpscraper.de",
+    "type": "library",
+    "license": "GPL-3",
+    "authors": [
+        {
+            "name": "Peter Thaleikis",
+            "homepage": "https://releasecandidate.dev"
+        }
+    ],
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/spekulatius"
+        },
+        {
+            "type": "buymeacoffee",
+            "url": "https://www.buymeacoffee.com/spekulatius"
+        }
+    ],
+    "require": {
+        "php": "^7.2"
+    },
+    "require-dev": {
+        "symfony/thanks": "*",
+        "phpunit/phpunit": "^8.0"
+    },
+    "suggest": {
+        "spekulatius/phpscraper": "Make your life easier accessing the web from PHP."
+    },
+    "autoload": {
+        "psr-4": {
+            "Spekulatius\\KeywordMerge\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Spekulatius\\KeywordMerge\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit --colors=always"
+    }
+}
