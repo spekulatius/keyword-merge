@@ -36,10 +36,14 @@ class KeywordComparator
      *
      * @param string $base_keyword
      * @param string|array $compare_keywords
+     * @param int $tolerance = 2
      * @return bool
      */
-    public function compareCharacters(string $base_keyword, $compare_keywords)
-    {
+    public function compareCharacters(
+        string $base_keyword,
+        $compare_keywords,
+        int $tolerance = 2
+    ) {
         // Check if we are comparing one or multiple keywords
         if (!is_array($compare_keywords)) {
             $compare_keywords = [$compare_keywords];
@@ -58,7 +62,7 @@ class KeywordComparator
             // Remove common characters which might make a different keyword, but actually aren't.
             // If almost nothing left - keywords must be very similar
             $final_diff = array_diff($diff, $this->ignore_characters);
-            $similar = (count($final_diff) < 2);
+            $similar = (count($final_diff) < $tolerance);
 
             // Add the results to the array - depending on string|array at the start.
             if (count($compare_keywords) === 1) {
@@ -124,17 +128,14 @@ class KeywordComparator
      *
      * @param string $base_keyword
      * @param string|array $compare_keywords
-     * @param float $threshold = null
+     * @param float $threshold = 4
      * @return bool
      */
     public function compareSimilarity(
         string $base_keyword,
         $compare_keywords,
-        float $threshold = null
+        float $threshold = 4
     ) {
-        // No threshold? Default to 4 for now
-        if (is_null($threshold)) { $threshold = 4; }
-
         // Check if we are comparing one or multiple keywords
         if (!is_array($compare_keywords)) {
             $compare_keywords = [$compare_keywords];
