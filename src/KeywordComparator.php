@@ -145,7 +145,9 @@ class KeywordComparator
         $result = [];
         foreach ($compare_keywords as $compare_keyword) {
             // Calculate the difference between the strings and compare it.
-            $similar = (levenshtein($base_keyword, $compare_keyword) < $threshold);
+            // For superlong queries we just assume it's not similar.
+            $similar = (mb_strlen($base_keyword) < 255 && mb_strlen($compare_keyword) < 255) ?
+                (levenshtein($base_keyword, $compare_keyword) < $threshold) : false;
 
             // Arrange the result
             if (count($compare_keywords) === 1) {
