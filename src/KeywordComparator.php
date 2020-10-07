@@ -53,16 +53,15 @@ class KeywordComparator
         $base_keyword_characters = str_split(strtolower($base_keyword));
         $result = [];
         foreach ($compare_keywords as $compare_keyword) {
+            $compare_keyword_characters = str_split(strtolower($compare_keyword));
+
             // Identify the difference of the strings
-            $diff = array_diff(
-                str_split(strtolower($compare_keyword)),
-                $base_keyword_characters
-            );
+            $diff1 = array_diff($compare_keyword_characters, $base_keyword_characters, $this->ignore_characters);
+            $diff2 = array_diff($base_keyword_characters, $compare_keyword_characters, $this->ignore_characters);
 
             // Remove common characters which might make a different keyword, but actually aren't.
             // If almost nothing left - keywords must be very similar
-            $final_diff = array_diff($diff, $this->ignore_characters);
-            $similar = (count($final_diff) < $tolerance);
+            $similar = (count($diff1)+count($diff2) < 2*$tolerance);
 
             // Add the results to the array - depending on string|array at the start.
             if (count($compare_keywords) === 1) {
