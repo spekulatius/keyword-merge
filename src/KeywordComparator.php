@@ -32,49 +32,6 @@ class KeywordComparator
     ];
 
     /**
-     * Checks if the difference is in the range of single characters and removes common cases
-     *
-     * @param string $base_keyword
-     * @param string|array $compare_keywords
-     * @param int $tolerance = 2
-     * @return bool
-     */
-    public function compareCharacters(
-        string $base_keyword,
-        $compare_keywords,
-        int $tolerance = 2
-    ) {
-        // Check if we are comparing one or multiple keywords
-        if (!is_array($compare_keywords)) {
-            $compare_keywords = [$compare_keywords];
-        }
-
-        // Compare each of the keywords
-        $base_keyword_characters = str_split(strtolower($base_keyword));
-        $result = [];
-        foreach ($compare_keywords as $compare_keyword) {
-            $compare_keyword_characters = str_split(strtolower($compare_keyword));
-
-            // Identify the difference of the strings
-            $diff1 = array_diff($compare_keyword_characters, $base_keyword_characters, $this->ignore_characters);
-            $diff2 = array_diff($base_keyword_characters, $compare_keyword_characters, $this->ignore_characters);
-
-            // Remove common characters which might make a different keyword, but actually aren't.
-            // If almost nothing left - keywords must be very similar
-            $similar = (count($diff1)+count($diff2) < 2*$tolerance);
-
-            // Add the results to the array - depending on string|array at the start.
-            if (count($compare_keywords) === 1) {
-                $result[$compare_keyword] = $similar;
-            } else if ($similar) {
-                $result[] = $compare_keyword;
-            }
-        }
-
-        return (count($compare_keywords) === 1) ? reset($result) : $result;
-    }
-
-    /**
      * Checks if the difference in complete words is only a filler word such as 'for'.
      *
      * @param string $base_keyword
@@ -142,18 +99,18 @@ class KeywordComparator
 
         // Remove ignore chars from the base keyword.
         // These shouldn't affect the result overly, but allow for tighter limits.
-        $base_keyword = str_replace($this->ignore_characters, '', $base_keyword);
+        $base_keyword = str_replace($this->ignore_characters, ' ', $base_keyword);
 
         // Compare each of the keywords
         $result = [];
         foreach ($compare_keywords as $compare_keyword) {
             // Remove some chars here as well.
-            $compare_keyword = str_replace($this->ignore_characters, '', $compare_keyword);
+            $prepared_compare_keyword = str_replace($this->ignore_characters, ' ', $compare_keyword);
 
             // Calculate the difference between the strings and compare it.
             // For superlong queries we just assume it's not similar.
-            $similar = (strlen($base_keyword) < 128 && strlen($compare_keyword) < 128) ?
-                (levenshtein($base_keyword, $compare_keyword) < $threshold) : false;
+            $similar = (strlen($base_keyword) < 128 && strlen($prepared_compare_keyword) < 128) ?
+                (levenshtein($base_keyword, $prepared_compare_keyword) < $threshold) : false;
 
             // Arrange the result
             if (count($compare_keywords) === 1) {
