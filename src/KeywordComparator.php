@@ -140,9 +140,16 @@ class KeywordComparator
             $compare_keywords = [$compare_keywords];
         }
 
+        // Remove ignore chars from the base keyword.
+        // These shouldn't affect the result overly, but allow for tighter limits.
+        $base_keyword = str_replace($this->ignore_characters, '', $base_keyword);
+
         // Compare each of the keywords
         $result = [];
         foreach ($compare_keywords as $compare_keyword) {
+            // Remove some chars here as well.
+            $compare_keyword = str_replace($this->ignore_characters, '', $compare_keyword);
+
             // Calculate the difference between the strings and compare it.
             // For superlong queries we just assume it's not similar.
             $similar = (strlen($base_keyword) < 128 && strlen($compare_keyword) < 128) ?
