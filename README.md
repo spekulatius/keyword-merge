@@ -1,5 +1,3 @@
-# 🚧️ Work In Progress! Use at own risk! 👷️
-
 # PHP Keyword Comparator / Merger
 
 An helper to compare similarity of keywords or list of keyword.
@@ -8,7 +6,7 @@ You will still need to a make a final call which helper(s) to use and how to con
 
 This package is intended to be used with [PHPScraper](https://github.com/spekulatius/phpscraper).
 
-# Sponsors
+## Sponsors
 
 This project is sponsored by:
 
