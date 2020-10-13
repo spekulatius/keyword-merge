@@ -13,8 +13,9 @@ class KeywordComparator
         // Searches with one or more spaces added
         ' ',
 
-        // Searches for social media handles
+        // Searches for social media handles and hash tags
         '@',
+        '#',
 
         // Searches with dash instead of spaces...
         '-',
