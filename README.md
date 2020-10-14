@@ -20,3 +20,9 @@ Want to sponsor this project? [Contact me](https://peterthaleikis.com/contact).
 Here are a few impressions on the way the library works:
 
 Coming soon - see tests for now.
+
+## Related Links
+
+ - [Simple performance test between PHPScraper and Python3 BeautifulSoup](https://github.com/spekulatius/link-scraping-test-beautifulsoup-vs-phpscraper)
+ - [Example of a keyword length distribution using PHPScraper](https://github.com/spekulatius/phpscraper-keyword-length-distribution-example)
+ - [Keyword Scraping Example using PHPScraper](https://github.com/spekulatius/phpscraper-keyword-scraping-example)
