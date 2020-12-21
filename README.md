@@ -14,6 +14,11 @@ This project is sponsored by:
 
 Want to sponsor this project? [Contact me](https://peterthaleikis.com/contact).
 
+## Install
+
+```bash
+composer require spekulatius/keyword-merge
+```
 
 ## Examples
 
