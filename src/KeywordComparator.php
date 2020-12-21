@@ -128,4 +128,36 @@ class KeywordComparator
 
         return (count($compare_keywords) === 1) ? reset($result) : $result;
     }
+
+    /**
+     * Checks if certain words are contained within a string.
+     *
+     * This is intended to check against URLs etc., if the contain certain strings.
+     *
+     * @param string $base_keywords
+     * @param string $compare_keyword
+     * @return bool
+     */
+    public function containWords(string $base_keywords, string $compare_keyword)
+    {
+        // Prepare the base keyword
+        $base_keywords = strtolower($base_keywords);
+        $base_keywords = str_replace($this->ignore_characters, ' ', $base_keywords);
+        $base_keywords = preg_split('/[\s]+/', $base_keywords);
+
+        // Compare each of the keywords
+        $result = [];
+        foreach ($base_keywords as $base_keyword) {
+            // Check if all the keywords are in the string.
+            if (false !== mb_strpos($compare_keyword, $base_keyword)) {
+                $result[$base_keyword] = true;
+            }
+        }
+
+        // All containing or if 3+ words all but one.
+        return (
+            count($base_keywords) === count($result) ||
+            count($base_keywords) > 3 && count($base_keywords) === 1+count($result)
+        );
+    }
 }
