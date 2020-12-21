@@ -138,7 +138,7 @@ class KeywordComparator
      * @param string $compare_keyword
      * @return bool
      */
-    public function containWords(string $base_keywords, string $compare_keyword)
+    public function containWords(string $base_keywords, ?string $compare_keyword)
     {
         // Prepare the base keyword
         $base_keywords = strtolower($base_keywords);
