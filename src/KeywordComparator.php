@@ -61,8 +61,11 @@ class KeywordComparator
 
             // Identify the difference of the strings
             $diff = array_diff(
-                preg_split('/[\s]+/', $prepared_compare_keyword),
-                $base_keyword
+                $base_keyword,
+                array_intersect(
+                    $base_keyword,
+                    preg_split('/[\s]+/', $prepared_compare_keyword)
+                )
             );
 
             // Remove common words which might make a different keyword, but usually aren't.
