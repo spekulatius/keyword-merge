@@ -48,8 +48,8 @@ $kwcmp->matchesWords('tbilisi georgia', 'is tbilisi the capital of georgia?');
 $kwcmp->containsWords('tbilisi georgia', 'is tbilisi the capital of georgia?');
 // ['is tbilisi the capital of georgia?']
 
-$kwcmp->similarWords('tbilisi georgia', 'is tbilisi the capital of georgia?');
-// []
+$kwcmp->similarWords('tbilisi georgia', 'georgias tbilisi');
+// ['georgias tbilisi']
 ```
 
 ## Related Links

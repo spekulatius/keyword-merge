@@ -22,7 +22,7 @@ class ExampleTest extends TestCase
         );
 
         $this->assertTrue(
-            $kwcmp->similarWord('tbilisi georgia', 'georgia tbilisi')
+            $kwcmp->similarWord('tbilisi georgia', 'georgias tbilisi')
         );
 
 
@@ -38,8 +38,8 @@ class ExampleTest extends TestCase
         );
 
         $this->assertSame(
-            $kwcmp->similarWords('tbilisi georgia', ['is tbilisi the capital of georgia?']),
-            []
+            $kwcmp->similarWords('tbilisi georgia', ['georgias tbilisi']),
+            ['georgias tbilisi']
         );
     }
 }
