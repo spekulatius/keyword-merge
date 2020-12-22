@@ -20,11 +20,37 @@ Want to sponsor this project? [Contact me](https://peterthaleikis.com/contact).
 composer require spekulatius/keyword-merge
 ```
 
-## Examples
+## At a glance
 
 Here are a few impressions on the way the library works:
 
-Coming soon - see tests for now.
+```php
+$kwp = new Spekulatius\KeywordMerge\KeywordComparator;
+
+$kwp->matchesWord('tbilisi georgia', 'is tbilisi the capital of georgia?');
+// false
+
+$kwp->containsWord('tbilisi georgia', 'is tbilisi the capital of georgia?');
+// true
+
+$kwp->similarWord('tbilisi georgia', 'georgias tbilisi');
+// true
+```
+
+You call also use arrays with correlated methods:
+
+```php
+$kwp = new Spekulatius\KeywordMerge\KeywordComparator;
+
+$kwp->matchesWords('tbilisi georgia', 'is tbilisi the capital of georgia?');
+// ['is tbilisi the capital of georgia?' => false]
+
+$kwp->containsWords('tbilisi georgia', 'is tbilisi the capital of georgia?');
+// ['is tbilisi the capital of georgia?' => true]
+
+$kwp->similarWords('tbilisi georgia', 'is tbilisi the capital of georgia?');
+// ['is tbilisi the capital of georgia?' => true]
+```
 
 ## Related Links
 

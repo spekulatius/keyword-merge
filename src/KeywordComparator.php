@@ -45,7 +45,9 @@ class KeywordComparator
 
         // Compare each of the keywords
         foreach ($compare_keywords as $compare_keyword) {
-            $result[$compare_keyword] = $this->matchesWord($compare_keyword);
+            if ($this->matchesWord($reference_keywords, $compare_keyword)) {
+                $result[] = $compare_keyword;
+            }
         }
 
         return $result;
@@ -67,17 +69,14 @@ class KeywordComparator
 
         // See if all words are contained
         $result = array_diff(
-            $reference_keywords,
-            array_intersect(
-                $reference_keywords,
-                preg_split('/[\s]+/', $compare_keywords)
-            )
+            $compare_keywords,
+            $reference_keywords
         );
 
         // Check if most words are contained.
         return
-            count($reference_keywords) === count($result) ||
-            count($reference_keywords) > 3 && count($reference_keywords) === 1+count($result);
+            count($result) === 0 ||
+            count($result) === 1 && count($reference_keywords) > 3;
     }
 
     /**
@@ -93,10 +92,9 @@ class KeywordComparator
 
         // Compare each of the keywords
         foreach ($compare_keywords as $compare_keyword) {
-            $result[$compare_keyword] = $this->containsWord(
-                $reference_keywords,
-                $compare_keyword
-            );
+            if ($this->containsWord($reference_keywords, $compare_keyword)) {
+                $result[] = $compare_keyword;
+            }
         }
 
         return $result;
@@ -119,20 +117,17 @@ class KeywordComparator
         // See if all words are contained
         $result = array_diff(
             $reference_keywords,
-            array_intersect(
-                $reference_keywords,
-                preg_split('/[\s]+/', $compare_keywords)
-            )
+            array_intersect($reference_keywords, $compare_keywords)
         );
 
         // Check if most words are contained.
         return
-            count($reference_keywords) === count($result) ||
-            count($reference_keywords) > 3 && count($reference_keywords) === 1+count($result);
+            count($result) === 0 ||
+            count($result) === 1 && count($reference_keywords) > 3;
     }
 
     /**
-     *
+     * List processing for similarWord.
      *
      * @param string $reference_keywords
      * @param array $compare_keywords
@@ -140,7 +135,7 @@ class KeywordComparator
      * @param float $length_threshold = 1
      * @return array
      */
-    public function compareSimilarWords(
+    public function similarWords(
         string $reference_keywords,
         array $compare_keywords,
         float $base_threshold = 2,
@@ -150,10 +145,16 @@ class KeywordComparator
 
         // Compare each of the keywords
         foreach ($compare_keywords as $compare_keyword) {
-            $result[$compare_keyword] = $this->compareSimilarWord(
+            $isSimilar = $this->similarWord(
                 $reference_keywords,
-                $compare_keyword
+                $compare_keyword,
+                $base_threshold,
+                $length_threshold
             );
+
+            if ($isSimilar) {
+                $result[] = $compare_keyword;
+            }
         }
 
         return $result;
@@ -169,19 +170,24 @@ class KeywordComparator
      * @param float $length_threshold = 1
      * @return bool
      */
-    public function compareSimilarWord(
+    public function similarWord(
         string $reference_keyword,
         string $compare_keyword,
-        float $base_threshold = 2,
-        float $length_threshold = 1
+        float $base_threshold = 1,
+        float $length_threshold = .5
     ) {
         // Define a custom keyword length-specific threshold
         $keyword_threshold = $base_threshold + (mb_strlen($reference_keyword)/10)*$length_threshold;
 
+        // Clean up some characters
+        $reference_keyword = str_replace($this->ignore_characters, ' ', strtolower($reference_keyword));
+        $compare_keyword = str_replace($this->ignore_characters, ' ', strtolower($compare_keyword));
+
         // Calculate the difference between the strings and compare it.
-        // For superlong queries we just assume it's not similar.
-        return (strlen($reference_keyword) < 128 && strlen($compare_keyword) < 128) ?
-            (levenshtein($reference_keyword, $compare_keyword) < $keyword_threshold) : false;
+        // For superlong queries we just assume they are not similar.
+        return
+            (strlen($reference_keyword) > 128 || strlen($compare_keyword) > 128) ? false :
+            (levenshtein($reference_keyword, $compare_keyword) < $keyword_threshold);
     }
 
     /**
@@ -195,11 +201,11 @@ class KeywordComparator
         $result = [];
 
         // Ignore certain characters and split the keywords
-        $keyword = str_replace($this->ignore_characters, ' ', strtolower($keyword));
-        $keyword = preg_split('/[\s]+/', $keyword);
+        $keywords = str_replace($this->ignore_characters, ' ', strtolower($keyword));
+        $keywords = preg_split('/[\s]+/', $keywords);
 
         // Remove some generic words
-        $result = array_diff($diff, $this->ignore_words);
+        $result = array_diff($keywords, $this->ignore_words);
 
         return $result;
     }

@@ -4,7 +4,7 @@ namespace Spekulatius\KeywordMerge\Tests;
 
 use PHPUnit\Framework\TestCase;
 
-class WordTest extends TestCase
+class ContainsWord extends TestCase
 {
     /**
      * @test
@@ -15,35 +15,35 @@ class WordTest extends TestCase
 
         // Test cases
         $tests = [
-            // Dash instead of space.
-            [
-                'base' => 'seo tools',
-                'compare' => 'seo-tools',
-            ],
-
-            // Captial letters
+            // Capitalisation shouldn't make a difference
             [
                 'base' => 'Test cases',
                 'compare' => 'TEST CASES',
             ],
 
-            // Just differently ordered.
+            // Dash should be filtered out
+            [
+                'base' => 'seo tools',
+                'compare' => 'seo-tools',
+            ],
+
+            // Same words lead to same characters, no diff.
             [
                 'base' => 'seo tools firefox',
                 'compare' => 'firefox seo tools',
             ],
 
-            // "for" is filtered out
+            // No idea as 's' is already included.
             [
-                'base' => 'seo tools firefox',
-                'compare' => 'firefox for seo tools',
+                'base' => 'side project ideas',
+                'compare' => 'side projects ideas',
             ],
         ];
 
-        // Run the tests.
+        // Run the tests one by one.
         foreach ($tests as $test) {
             $this->assertTrue(
-                $kwcmp->compareWords($test['base'], $test['compare']),
+                $kwcmp->containsWord($test['base'], $test['compare']),
                 "Case: '${test['base']}' vs. '${test['compare']}'"
             );
         }
@@ -58,29 +58,17 @@ class WordTest extends TestCase
 
         // Test cases
         $tests = [
-            // Additional word
+            // "Chrome" != "Firefox"
             [
-                'base' => 'Test cases',
-                'compare' => 'Test use cases',
-            ],
-
-            // "Chrome" instead of "Firefox"
-            [
-                'base' => 'seo tools for firefox',
-                'compare' => 'chrome seo tools',
-            ],
-
-            // "Projects" != "Project"
-            [
-                'base' => 'side project ideas',
-                'compare' => 'side projects ideas',
+                'base' => 'seo tools firefox',
+                'compare' => 'seo tools chrome',
             ],
         ];
 
         // Run the tests.
         foreach ($tests as $test) {
             $this->assertFalse(
-                $kwcmp->compareWords($test['base'], $test['compare']),
+                $kwcmp->containsWord($test['base'], $test['compare']),
                 "Case: '${test['base']}' vs. '${test['compare']}'"
             );
         }
