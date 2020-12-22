@@ -52,8 +52,27 @@ $kwcmp->similarWords('tbilisi georgia', 'georgias tbilisi');
 // ['georgias tbilisi']
 ```
 
+## Keywords in URL Path
+
+The library can also test for keywords in the URL path:
+
+```php
+$kwcmp = new Spekulatius\KeywordMerge\KeywordComparator;
+
+$kwcmp->inUrlPath('https://example.com/cats-are-awesome', 'seo tools');
+// false
+
+$kwcmp->inUrlPath('https://example.com/seo-tools', 'seo tools');
+// true
+
+$kwcmp->inUrlPath('https://example.com/chrome-seo-tools', 'chrome seo tools and toolkit');
+// true - one word difference is accepted, from 3+ words
+```
+
+Further example and cases can be found in the tests!
+
 ## Related Links
 
  - [Simple performance test between PHPScraper and Python3 BeautifulSoup](https://github.com/spekulatius/link-scraping-test-beautifulsoup-vs-phpscraper)
- - [Example of a keyword length distribution using PHPScraper](https://github.com/spekulatius/phpscraper-keyword-length-distribution-example)
+ - [Keyword length distribution example with PHPScraper](https://github.com/spekulatius/phpscraper-keyword-length-distribution-example)
  - [Keyword Scraping Example using PHPScraper](https://github.com/spekulatius/phpscraper-keyword-scraping-example)

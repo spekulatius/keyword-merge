@@ -4,7 +4,7 @@ namespace Spekulatius\KeywordMerge\Tests;
 
 use PHPUnit\Framework\TestCase;
 
-class MatchesWordTest extends TestCase
+class InUrlPathTest extends TestCase
 {
     /**
      * @test
@@ -15,41 +15,41 @@ class MatchesWordTest extends TestCase
 
         // Test cases
         $tests = [
-            // Dash instead of space.
+            // Exact match
             [
-                'base' => 'seo tools',
-                'compare' => 'seo-tools',
+                'base' => 'https://test.com/seo-tools',
+                'compare' => 'seo tools',
             ],
 
-            // Captial letters
+            // Dash instead of space. Should be converted before checking
             [
-                'base' => 'Test cases',
-                'compare' => 'TEST CASES',
+                'base' => 'https://test.com/seo-tools',
+                'compare' => 'seo tools',
             ],
 
-            // Just differently ordered.
+            // More words
             [
-                'base' => 'seo tools firefox',
-                'compare' => 'firefox seo tools',
+                'base' => 'https://test.com/seo-tools-and-toolkit',
+                'compare' => 'toolkit',
             ],
 
-            // "for" is filtered out
+            // One missing words is okay, if query is three words or more.
             [
-                'base' => 'seo tools firefox',
-                'compare' => 'firefox for seo tools',
+                'base' => 'https://example.com/chrome-seo-tools',
+                'compare' => 'chrome seo tools and toolkit',
             ],
         ];
 
         // Run the tests.
         foreach ($tests as $test) {
             $this->assertTrue(
-                $kwcmp->matchesWord($test['base'], $test['compare']),
+                $kwcmp->inUrlPath($test['base'], $test['compare']),
                 "Case: '${test['base']}' vs. '${test['compare']}'"
             );
 
             // Arrays should do the same
             $this->assertSame(
-                $kwcmp->matchesWords($test['base'], [$test['compare']]),
+                $kwcmp->inUrlPaths($test['base'], [$test['compare']]),
                 [$test['compare']],
                 "Case: '${test['base']}' vs. '${test['compare']}'"
             );
@@ -65,35 +65,35 @@ class MatchesWordTest extends TestCase
 
         // Test cases
         $tests = [
-            // Additional word
+            // Not matching at all
             [
-                'base' => 'Test cases',
+                'base' => 'https://example.com/not-about-this-topic',
                 'compare' => 'Test use cases',
             ],
 
-            // "Chrome" instead of "Firefox"
+            // Missing word "Chrome"
             [
-                'base' => 'seo tools for firefox',
+                'base' => 'https://example.com/seo-tools',
                 'compare' => 'chrome seo tools',
             ],
 
-            // "Projects" != "Project"
+            // One word off is tolerated at 3+ words, but here it's two ("chrome" & "toolkit")
             [
-                'base' => 'side project ideas',
-                'compare' => 'side projects ideas',
+                'base' => 'https://example.com/seo-tools',
+                'compare' => 'chrome seo tools and toolkit',
             ],
         ];
 
         // Run the tests.
         foreach ($tests as $test) {
             $this->assertFalse(
-                $kwcmp->matchesWord($test['base'], $test['compare']),
+                $kwcmp->inUrlPath($test['base'], $test['compare']),
                 "Case: '${test['base']}' vs. '${test['compare']}'"
             );
 
             // Arrays should do the same
             $this->assertSame(
-                $kwcmp->matchesWords($test['base'], [$test['compare']]),
+                $kwcmp->inUrlPaths($test['base'], [$test['compare']]),
                 [],
                 "Case: '${test['base']}' vs. '${test['compare']}'"
             );
