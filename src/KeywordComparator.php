@@ -66,17 +66,21 @@ class KeywordComparator
      * @param string $compare_keyword
      * @return bool
      */
-    public function matchesWord(string $reference_keyword, string $compare_keyword)
-    {
+    public function matchesWord(
+        string $reference_keyword,
+        string $compare_keyword = null
+    ) {
+        // If no keywords are given it's not matching
+        if (is_null($compare_keyword)) {
+            return false;
+        }
+
         // Prepare the keywords
         $reference_keywords = $this->prepareWords($reference_keyword);
         $compare_keywords = $this->prepareWords($compare_keyword);
 
         // See if all words are contained
-        $result = array_diff(
-            $compare_keywords,
-            $reference_keywords
-        );
+        $result = array_diff($compare_keywords, $reference_keywords);
 
         // Check if most words are contained.
         return
@@ -113,8 +117,15 @@ class KeywordComparator
      * @param string $compare_keyword
      * @return bool
      */
-    public function containsWord(string $reference_keyword, string $compare_keyword)
-    {
+    public function containsWord(
+        string $reference_keyword,
+        string $compare_keyword = null
+    ) {
+        // If no keywords are given it's not matching
+        if (is_null($compare_keyword)) {
+            return false;
+        }
+
         // Prepare the keywords
         $reference_keywords = $this->prepareWords($reference_keyword);
         $compare_keywords = $this->prepareWords($compare_keyword);
@@ -177,10 +188,15 @@ class KeywordComparator
      */
     public function similarWord(
         string $reference_keyword,
-        string $compare_keyword,
+        string $compare_keyword = null,
         float $base_threshold = 1,
         float $length_threshold = .5
     ) {
+        // If no keywords are given it's not matching
+        if (is_null($compare_keyword)) {
+            return false;
+        }
+
         // Define a custom keyword length-specific threshold
         $keyword_threshold = $base_threshold + (mb_strlen($reference_keyword)/10)*$length_threshold;
 
@@ -208,9 +224,14 @@ class KeywordComparator
      * @param string $compare_keywords
      * @return bool
      */
-    public function inUrlPath(string $url, string $compare_keywords)
+    public function inUrlPath(string $url, string $compare_keywords = null)
     {
-        // get the path
+        // If no keywords are given it's not matching
+        if (is_null($compare_keywords)) {
+            return false;
+        }
+
+        // Get the path
         $path = parse_url(strtolower($url), PHP_URL_PATH);
 
         // Prepare the keywords
@@ -251,14 +272,13 @@ class KeywordComparator
         return $result;
     }
 
-
     /**
      * Ignore certain characters and words. Then splits the string into keywords.
      *
      * @param string $keyword
      * @return array
      */
-    protected function prepareWords(string $keyword)
+    protected function prepareWords(string $keyword = null)
     {
         $result = [];
 
