@@ -46,6 +46,13 @@ class MatchesWordTest extends TestCase
                 $kwcmp->matchesWord($test['base'], $test['compare']),
                 "Case: '${test['base']}' vs. '${test['compare']}'"
             );
+
+            // Arrays should do the same
+            $this->assertSame(
+                $kwcmp->matchesWords($test['base'], [$test['compare']]),
+                [$test['compare']],
+                "Case: '${test['base']}' vs. '${test['compare']}'"
+            );
         }
     }
 
@@ -81,6 +88,13 @@ class MatchesWordTest extends TestCase
         foreach ($tests as $test) {
             $this->assertFalse(
                 $kwcmp->matchesWord($test['base'], $test['compare']),
+                "Case: '${test['base']}' vs. '${test['compare']}'"
+            );
+
+            // Arrays should do the same
+            $this->assertSame(
+                $kwcmp->matchesWords($test['base'], [$test['compare']]),
+                [],
                 "Case: '${test['base']}' vs. '${test['compare']}'"
             );
         }

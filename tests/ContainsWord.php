@@ -46,6 +46,13 @@ class ContainsWord extends TestCase
                 $kwcmp->containsWord($test['base'], $test['compare']),
                 "Case: '${test['base']}' vs. '${test['compare']}'"
             );
+
+            // Arrays should do the same
+            $this->assertSame(
+                $kwcmp->containsWords($test['base'], [$test['compare']]),
+                [$test['compare']],
+                "Case: '${test['base']}' vs. '${test['compare']}'"
+            );
         }
     }
 
@@ -69,6 +76,13 @@ class ContainsWord extends TestCase
         foreach ($tests as $test) {
             $this->assertFalse(
                 $kwcmp->containsWord($test['base'], $test['compare']),
+                "Case: '${test['base']}' vs. '${test['compare']}'"
+            );
+
+            // Arrays should do the same
+            $this->assertSame(
+                $kwcmp->containsWords($test['base'], [$test['compare']]),
+                [],
                 "Case: '${test['base']}' vs. '${test['compare']}'"
             );
         }

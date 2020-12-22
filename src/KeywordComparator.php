@@ -230,6 +230,27 @@ class KeywordComparator
             count($missing) === 1 && count($compare_keywords) > 3;
     }
 
+    /**
+     * List processing for inUrlPath.
+     *
+     * @param string $url
+     * @param array $compare_keywords
+     * @return array
+     */
+    public function inUrlPaths(string $url, array $compare_keywords)
+    {
+        $result = [];
+
+        // Compare each of the keywords
+        foreach ($compare_keywords as $compare_keyword) {
+            if ($this->inUrlPath($url, $compare_keyword)) {
+                $result[] = $compare_keyword;
+            }
+        }
+
+        return $result;
+    }
+
 
     /**
      * Ignore certain characters and words. Then splits the string into keywords.
