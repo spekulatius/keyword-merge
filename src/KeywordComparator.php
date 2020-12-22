@@ -33,6 +33,8 @@ class KeywordComparator
         'for',
         'of',
         'to',
+        'and',
+        'with',
     ];
 
     /**
@@ -198,6 +200,36 @@ class KeywordComparator
             (strlen($reference_keyword) > 128 || strlen($compare_keyword) > 128) ? false :
             (levenshtein($reference_keyword, $compare_keyword) < $keyword_threshold);
     }
+
+    /**
+     * Checks if a set of keywords is contained in a URL path (not domain).
+     *
+     * @param string $url
+     * @param string $compare_keywords
+     * @return bool
+     */
+    public function inUrlPath(string $url, string $compare_keywords)
+    {
+        // get the path
+        $path = parse_url(strtolower($url), PHP_URL_PATH);
+
+        // Prepare the keywords
+        $compare_keywords = $this->prepareWords($compare_keywords);
+
+        // Create a list of words not contained
+        $missing = [];
+        foreach ($compare_keywords as $compare_keyword) {
+            if (mb_strpos($path, $compare_keyword) === false) {
+                $missing[] = $compare_keyword;
+            }
+        }
+
+        // Check if most words are contained.
+        return
+            count($missing) === 0 ||
+            count($missing) === 1 && count($compare_keywords) > 3;
+    }
+
 
     /**
      * Ignore certain characters and words. Then splits the string into keywords.
