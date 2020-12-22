@@ -4,7 +4,7 @@ namespace Spekulatius\KeywordMerge\Tests;
 
 use PHPUnit\Framework\TestCase;
 
-class LevenshteinTest extends TestCase
+class SimilarWordTest extends TestCase
 {
     /**
      * @test
@@ -21,7 +21,7 @@ class LevenshteinTest extends TestCase
                 'compare' => 'seo-tools',
             ],
 
-            // Capitalization
+            // Capitalization shouldn't matter
             [
                 'base' => 'seo tools',
                 'compare' => 'SEO tools',
@@ -48,13 +48,25 @@ class LevenshteinTest extends TestCase
                 'base' => 'side project ideas',
                 'compare' => 'side projects ideas',
             ],
+
+            // Additional word
+            [
+                'base' => 'seo tools for firefox',
+                'compare' => 'firefox seo tools',
+            ],
+
+            // Different word order
+            [
+                'base' => 'seo tools firefox',
+                'compare' => 'firefox seo tools',
+            ],
         ];
 
         // Run the tests.
         foreach ($tests as $test) {
             $this->assertTrue(
-                $kwcmp->compareSimilarity($test['base'], $test['compare']),
-                "Case: '${test['base']}' vs. '${test['compare']}'".levenshtein($test['base'],$test['compare'])
+                $kwcmp->similarWord($test['base'], $test['compare']),
+                "Case: '${test['base']}' vs. '${test['compare']}'"
             );
         }
     }
@@ -73,25 +85,13 @@ class LevenshteinTest extends TestCase
                 'base' => 'Test cases',
                 'compare' => 'Test use-cases',
             ],
-
-            // Additional word
-            [
-                'base' => 'seo tools for firefox',
-                'compare' => 'firefox seo tools',
-            ],
-
-            // Different word order
-            [
-                'base' => 'seo tools firefox',
-                'compare' => 'firefox seo tools',
-            ],
         ];
 
         // Run the tests.
         foreach ($tests as $test) {
             $this->assertFalse(
-                $kwcmp->compareSimilarity($test['base'], $test['compare']),
-                "Case: '${test['base']}' vs. '${test['compare']}'".levenshtein($test['base'],$test['compare'])
+                $kwcmp->similarWord($test['base'], $test['compare']),
+                "Case: '${test['base']}' vs. '${test['compare']}'"
             );
         }
     }

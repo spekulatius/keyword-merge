@@ -19,6 +19,7 @@ class ArrayTest extends TestCase
                 'base' => 'seo tools',
                 'compare' => [
                     'seo-tools',
+                    'seo toolz',
                     'tools for seo',
                     'seo toolkit',
                     'seo tools kit',
@@ -28,16 +29,21 @@ class ArrayTest extends TestCase
                 ],
 
                 // Expected results for each test:
-                'expected_characters' => [
-                    'seo-tools',
-                ],
-                'expected_words' => [
+                'matchesWords' => [
                     'seo-tools',
                     'tools for seo',
                 ],
-                'expected_levenshtain' => [
+                'containsWords' => [
                     'seo-tools',
-                    'seo toolkit',
+                    'tools for seo',
+                    'seo tools kit',
+                    'test tools for seo',
+                    'seo testing tools',
+                ],
+                'similarWords' => [
+                    'seo-tools',
+                    'seo toolz',
+                    'tools for seo',
                 ],
             ],
         ];
@@ -45,23 +51,21 @@ class ArrayTest extends TestCase
         // Run the tests.
         foreach ($tests as $test) {
             $this->assertSame(
-                $kwcmp->compareCharacters($test['base'], $test['compare']),
-                $test['expected_characters'],
-                "Characters Case: '${test['base']}' isn't working as expected."
+                $kwcmp->matchesWords($test['base'], $test['compare']),
+                $test['matchesWords'],
+                "Matches Case: '${test['base']}' isn't working as expected."
             );
 
-
             $this->assertSame(
-                $kwcmp->compareWords($test['base'], $test['compare']),
-                $test['expected_words'],
-                "Word Case: '${test['base']}' isn't working as expected."
+                $kwcmp->containsWords($test['base'], $test['compare']),
+                $test['containsWords'],
+                "Contains Case: '${test['base']}' isn't working as expected."
             );
 
-
             $this->assertSame(
-                $kwcmp->compareSimilarity($test['base'], $test['compare']),
-                $test['expected_levenshtain'],
-                "Levenshtain Case: '${test['base']}' isn't working as expected."
+                $kwcmp->similarWords($test['base'], $test['compare']),
+                $test['similarWords'],
+                "Levenshtein Case: '${test['base']}' isn't working as expected."
             );
         }
     }
