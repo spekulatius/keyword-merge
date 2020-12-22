@@ -48,6 +48,18 @@ class SimilarWordTest extends TestCase
                 'base' => 'side project ideas',
                 'compare' => 'side projects ideas',
             ],
+
+            // Additional word
+            [
+                'base' => 'seo tools for firefox',
+                'compare' => 'firefox seo tools',
+            ],
+
+            // Different word order
+            [
+                'base' => 'seo tools firefox',
+                'compare' => 'firefox seo tools',
+            ],
         ];
 
         // Run the tests.
@@ -72,18 +84,6 @@ class SimilarWordTest extends TestCase
             [
                 'base' => 'Test cases',
                 'compare' => 'Test use-cases',
-            ],
-
-            // Additional word
-            [
-                'base' => 'seo tools for firefox',
-                'compare' => 'firefox seo tools',
-            ],
-
-            // Different word order
-            [
-                'base' => 'seo tools firefox',
-                'compare' => 'firefox seo tools',
             ],
         ];
 

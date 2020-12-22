@@ -19,6 +19,9 @@ class KeywordComparator
 
         // Searches with dash instead of spaces...
         '-',
+
+        // Allow questions with "?" to pass
+        '?',
     ];
 
     /**
@@ -179,9 +182,15 @@ class KeywordComparator
         // Define a custom keyword length-specific threshold
         $keyword_threshold = $base_threshold + (mb_strlen($reference_keyword)/10)*$length_threshold;
 
-        // Clean up some characters
-        $reference_keyword = str_replace($this->ignore_characters, ' ', strtolower($reference_keyword));
-        $compare_keyword = str_replace($this->ignore_characters, ' ', strtolower($compare_keyword));
+        // Prepare the keywords
+        $reference_keywords = $this->prepareWords($reference_keyword);
+        $compare_keywords = $this->prepareWords($compare_keyword);
+
+        // Sort and re-join to get the words in the same order.
+        sort($reference_keywords);
+        sort($compare_keywords);
+        $reference_keyword = join(' ', $reference_keywords);
+        $compare_keyword = join(' ', $compare_keywords);
 
         // Calculate the difference between the strings and compare it.
         // For superlong queries we just assume they are not similar.

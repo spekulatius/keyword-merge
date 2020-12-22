@@ -43,6 +43,7 @@ class ArrayTest extends TestCase
                 'similarWords' => [
                     'seo-tools',
                     'seo toolz',
+                    'tools for seo',
                 ],
             ],
         ];

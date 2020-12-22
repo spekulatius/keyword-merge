@@ -25,31 +25,31 @@ composer require spekulatius/keyword-merge
 Here are a few impressions on the way the library works:
 
 ```php
-$kwp = new Spekulatius\KeywordMerge\KeywordComparator;
+$kwcmp = new Spekulatius\KeywordMerge\KeywordComparator;
 
-$kwp->matchesWord('tbilisi georgia', 'is tbilisi the capital of georgia?');
+$kwcmp->matchesWord('tbilisi georgia', 'is tbilisi the capital of georgia?');
 // false
 
-$kwp->containsWord('tbilisi georgia', 'is tbilisi the capital of georgia?');
+$kwcmp->containsWord('tbilisi georgia', 'is tbilisi the capital of georgia?');
 // true
 
-$kwp->similarWord('tbilisi georgia', 'georgias tbilisi');
+$kwcmp->similarWord('tbilisi georgia', 'georgias tbilisi');
 // true
 ```
 
 You call also use arrays with correlated methods:
 
 ```php
-$kwp = new Spekulatius\KeywordMerge\KeywordComparator;
+$kwcmp = new Spekulatius\KeywordMerge\KeywordComparator;
 
-$kwp->matchesWords('tbilisi georgia', 'is tbilisi the capital of georgia?');
-// ['is tbilisi the capital of georgia?' => false]
+$kwcmp->matchesWords('tbilisi georgia', 'is tbilisi the capital of georgia?');
+// []
 
-$kwp->containsWords('tbilisi georgia', 'is tbilisi the capital of georgia?');
-// ['is tbilisi the capital of georgia?' => true]
+$kwcmp->containsWords('tbilisi georgia', 'is tbilisi the capital of georgia?');
+// ['is tbilisi the capital of georgia?']
 
-$kwp->similarWords('tbilisi georgia', 'is tbilisi the capital of georgia?');
-// ['is tbilisi the capital of georgia?' => true]
+$kwcmp->similarWords('tbilisi georgia', 'is tbilisi the capital of georgia?');
+// []
 ```
 
 ## Related Links
