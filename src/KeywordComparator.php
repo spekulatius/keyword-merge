@@ -29,13 +29,15 @@ class KeywordComparator
      *
      * @var array
      */
-    protected $ignore_words = [
-        'for',
-        'of',
-        'to',
-        'and',
-        'with',
-    ];
+    protected $ignore_words = [];
+
+    /**
+     * Load the ignore words on construction
+     */
+    public function __construct()
+    {
+        $this->ignore_words = require_once('IgnoreWords.php');
+    }
 
     /**
      * List processing for matchesWord.
