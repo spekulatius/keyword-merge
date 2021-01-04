@@ -71,8 +71,8 @@ class SimilarWordTest extends TestCase
 
             // Arrays should do the same
             $this->assertSame(
-                $kwcmp->similarWords($test['base'], [$test['compare']]),
                 [$test['compare']],
+                $kwcmp->similarWords($test['base'], [$test['compare']]),
                 "Case: '${test['base']}' vs. '${test['compare']}'"
             );
         }
@@ -87,9 +87,9 @@ class SimilarWordTest extends TestCase
 
         // Test cases
         $tests = [
-            // Additional word with dash
+            // Contains, but is different.
             [
-                'base' => 'Test cases',
+                'base' => 'Test Environment Cases',
                 'compare' => 'Test use-cases',
             ],
         ];

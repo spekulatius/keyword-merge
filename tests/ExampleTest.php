@@ -34,18 +34,18 @@ class ExampleTest extends TestCase
         $kwcmp = new \Spekulatius\KeywordMerge\KeywordComparator;
 
         $this->assertSame(
-            $kwcmp->matchesWords('tbilisi georgia', ['is tbilisi the capital of georgia?']),
-            []
+            [],
+            $kwcmp->matchesWords('tbilisi georgia', ['is tbilisi the capital of georgia?'])
         );
 
         $this->assertSame(
-            $kwcmp->containsWords('tbilisi georgia', ['is tbilisi the capital of georgia?']),
-            ['is tbilisi the capital of georgia?']
+            ['is tbilisi the capital of georgia?'],
+            $kwcmp->containsWords('tbilisi georgia', ['is tbilisi the capital of georgia?'])
         );
 
         $this->assertSame(
-            $kwcmp->similarWords('tbilisi georgia', ['georgias tbilisi']),
-            ['georgias tbilisi']
+            ['georgias tbilisi'],
+            $kwcmp->similarWords('tbilisi georgia', ['georgias tbilisi'])
         );
     }
 

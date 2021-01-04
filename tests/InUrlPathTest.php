@@ -49,8 +49,8 @@ class InUrlPathTest extends TestCase
 
             // Arrays should do the same
             $this->assertSame(
-                $kwcmp->inUrlPaths($test['base'], [$test['compare']]),
                 [$test['compare']],
+                $kwcmp->inUrlPaths($test['base'], [$test['compare']]),
                 "Case: '${test['base']}' vs. '${test['compare']}'"
             );
         }
@@ -93,8 +93,8 @@ class InUrlPathTest extends TestCase
 
             // Arrays should do the same
             $this->assertSame(
-                $kwcmp->inUrlPaths($test['base'], [$test['compare']]),
                 [],
+                $kwcmp->inUrlPaths($test['base'], [$test['compare']]),
                 "Case: '${test['base']}' vs. '${test['compare']}'"
             );
         }

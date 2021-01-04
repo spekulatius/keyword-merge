@@ -36,7 +36,7 @@ class KeywordComparator
      */
     public function __construct()
     {
-        $this->ignore_words = require_once('IgnoreWords.php');
+        $this->ignore_words = require('IgnoreWords.php');
     }
 
     /**
@@ -289,6 +289,7 @@ class KeywordComparator
         $keywords = preg_split('/[\s]+/', $keywords);
 
         // Remove some generic words
+        // var_dump(__METHOD__, $this->ignore_words);die;
         $result = array_diff($keywords, $this->ignore_words);
 
         return $result;

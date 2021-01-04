@@ -51,20 +51,20 @@ class ArrayTest extends TestCase
         // Run the tests.
         foreach ($tests as $test) {
             $this->assertSame(
-                $kwcmp->matchesWords($test['base'], $test['compare']),
                 $test['matchesWords'],
+                $kwcmp->matchesWords($test['base'], $test['compare']),
                 "Matches Case: '${test['base']}' isn't working as expected."
             );
 
             $this->assertSame(
-                $kwcmp->containsWords($test['base'], $test['compare']),
                 $test['containsWords'],
+                $kwcmp->containsWords($test['base'], $test['compare']),
                 "Contains Case: '${test['base']}' isn't working as expected."
             );
 
             $this->assertSame(
-                $kwcmp->similarWords($test['base'], $test['compare']),
                 $test['similarWords'],
+                $kwcmp->similarWords($test['base'], $test['compare']),
                 "Levenshtein Case: '${test['base']}' isn't working as expected."
             );
         }
