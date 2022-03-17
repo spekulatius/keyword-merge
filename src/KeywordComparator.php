@@ -46,7 +46,7 @@ class KeywordComparator
      * @param array $compare_keywords
      * @return array
      */
-    public function matchesWords(string $reference_keywords, array $compare_keywords)
+    public function matchesWords(string $reference_keywords, array $compare_keywords): array
     {
         $result = [];
 
@@ -71,7 +71,7 @@ class KeywordComparator
     public function matchesWord(
         string $reference_keyword,
         string $compare_keyword = null
-    ) {
+    ): bool {
         // If no keywords are given it's not matching
         if (is_null($compare_keyword)) {
             return false;
@@ -97,7 +97,7 @@ class KeywordComparator
      * @param array $compare_keywords
      * @return array
      */
-    public function containsWords(string $reference_keywords, array $compare_keywords)
+    public function containsWords(string $reference_keywords, array $compare_keywords): array
     {
         $result = [];
 
@@ -122,7 +122,7 @@ class KeywordComparator
     public function containsWord(
         string $reference_keyword,
         string $compare_keyword = null
-    ) {
+    ): bool {
         // If no keywords are given it's not matching
         if (is_null($compare_keyword)) {
             return false;
@@ -158,7 +158,7 @@ class KeywordComparator
         array $compare_keywords,
         float $base_threshold = 2,
         float $length_threshold = 1
-    ) {
+    ): array {
         $result = [];
 
         // Compare each of the keywords
@@ -193,7 +193,7 @@ class KeywordComparator
         string $compare_keyword = null,
         float $base_threshold = 1,
         float $length_threshold = .5
-    ) {
+    ): bool {
         // If no keywords are given it's not matching
         if (is_null($compare_keyword)) {
             return false;
@@ -226,7 +226,7 @@ class KeywordComparator
      * @param string $compare_keywords
      * @return bool
      */
-    public function inUrlPath(string $url, string $compare_keywords = null)
+    public function inUrlPath(string $url, string $compare_keywords = null): bool
     {
         // If no keywords are given it's not matching
         if (is_null($compare_keywords)) {
@@ -260,7 +260,7 @@ class KeywordComparator
      * @param array $compare_keywords
      * @return array
      */
-    public function inUrlPaths(string $url, array $compare_keywords)
+    public function inUrlPaths(string $url, array $compare_keywords): array
     {
         $result = [];
 
@@ -280,7 +280,7 @@ class KeywordComparator
      * @param string $keyword
      * @return array
      */
-    protected function prepareWords(string $keyword = null)
+    protected function prepareWords(string $keyword = null): array
     {
         $result = [];
 
