@@ -31,12 +31,12 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.2|^8.0",
         "ext-mbstring": "*"
     },
     "require-dev": {
         "symfony/thanks": "*",
-        "phpunit/phpunit": "^8.0"
+        "phpunit/phpunit": "^8.5"
     },
     "suggest": {
         "spekulatius/phpscraper": "Make your life easier accessing the web from PHP."
@@ -53,5 +53,10 @@
     },
     "scripts": {
         "test": "phpunit --colors=always"
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/thanks": true
+        }
     }
 }
